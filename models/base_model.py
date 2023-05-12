@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """ Base model class """
 
-from uuid import uuid4
 import datetime
-from engine import storage
+import models
+from uuid import uuid4
 
 
 class BaseModel:
@@ -37,7 +37,7 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.datetime.now()
             self.updated_at = datetime.datetime.now()
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self):
         """returns a string representation of the instance"""
@@ -46,7 +46,7 @@ class BaseModel:
     def save(self):
         """updates the public instance attribute updated_at"""
         self.updated_at = datetime.datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """returns a dictionary containing all keys/values of __dict__"""
