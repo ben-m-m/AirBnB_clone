@@ -75,11 +75,11 @@ class HBNBCommand(cmd.Cmd):
         
     def do_all(self, arg):
         args = self.state(arg)
-        list = []
+        listi = []
         if len(args) == 1 or len(args) == 0:
             for value in self.__dict.values():
-                list.append(str(value))
-            print(list)
+                listi.append(str(value))
+            print(listi)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
