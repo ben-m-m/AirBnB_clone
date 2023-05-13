@@ -81,6 +81,5 @@ class HBNBCommand(cmd.Cmd):
                 list.append(str(value))
             print(list)
 
-
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
