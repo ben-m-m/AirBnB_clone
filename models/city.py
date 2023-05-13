@@ -6,3 +6,6 @@ class City(BaseModel):
     """City class"""
     name = ""
     state_id = ""
+    
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)

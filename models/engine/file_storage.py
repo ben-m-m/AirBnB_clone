@@ -3,6 +3,12 @@
 
 import json
 from models.base_model import BaseModel
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 import os.path
 
 
@@ -22,12 +28,14 @@ class FileStorage:
     
     def all(self):
         """Returns the dictionary __objects"""
+        self.reload()
         return self.__objects
     
     def new(self, obj):
         """Sets in __objects the obj with key <obj class name>.id"""
         key = obj.__class__.__name__ + "." + obj.id
         self.__objects[key] = obj
+        self.save()
         
     def save(self):
         """Serializes __objects to the JSON file (path: __file_path)"""
@@ -57,3 +65,5 @@ class FileStorage:
         if key in self.__objects:
             del self.__objects[key]
         self.save()
+    
+    

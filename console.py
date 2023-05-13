@@ -5,6 +5,12 @@
 import cmd
 from datetime import datetime
 from models.base_model import BaseModel
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 from models import storage
 
 class HBNBCommand(cmd.Cmd):
@@ -80,6 +86,24 @@ class HBNBCommand(cmd.Cmd):
             for value in self.__dict.values():
                 listi.append(str(value))
             print(listi)
-
+    
+    def do_update(self, arg):
+        args = self.state(arg)
+        if len(args) == 0:
+            print("** class name missing **")
+        elif args[0] not in self.__classes:
+            print("** class doesn't exist **")
+        elif len(args) == 1:
+            print("** instance id missing **")
+        elif args[0] + "." + args[1] not in self.__classes_id:
+            print("** no instance found **")
+        elif len(args) == 2:
+            print("** no attribute found **")
+        elif len(args) == 3:
+            print("** no attribute value found **")
+        else:
+            key = args[0] + "." + args[1]
+            setattr(self.__dict[key], args[2], args[3])
+            storage.save()
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
