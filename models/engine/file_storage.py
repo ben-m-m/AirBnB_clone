@@ -42,10 +42,8 @@ class FileStorage:
         try:
             if os.path.isfile(self.__file_path):
                 with open(self.__file_path, "r") as f:
-                    new_dict = json.load(f)
-                    for key, value in new_dict.items():
-                        class_name = eval(value["__class__"])
-                        self.__objects[key] = class_name(value)
+                    for key, value in json.load(f).items():
+                        self.__objects[key] = eval(value["__class__"])(**value)
         except FileNotFoundError:
             return
         except json.JSONDecodeError:
