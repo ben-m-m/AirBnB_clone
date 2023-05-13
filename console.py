@@ -10,7 +10,7 @@ from models import storage
 class HBNBCommand(cmd.Cmd):
     """HBNBCommand class"""
     prompt = '(hbnb) '
-    __classes = ["BaseModel"]
+    __classes = ["BaseModel", "User"]
     __dict = {}
     __classes_id = []
     
