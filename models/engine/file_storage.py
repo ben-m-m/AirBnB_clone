@@ -2,6 +2,8 @@
 """ File storage class """
 
 import json
+from models.base_model import BaseModel
+import os.path
 
 
 class FileStorage:
@@ -38,10 +40,22 @@ class FileStorage:
     def reload(self):
         """Deserializes the JSON file to __objects"""
         try:
-            with open(self.__file_path, "r") as f:
-                new_dict = json.load(f)
-                for key, value in new_dict.items():
-                    class_name = value["__class__"]
-                    self.__objects[key] = eval(class_name + "(**value)")
+            if os.path.isfile(self.__file_path):
+                with open(self.__file_path, "r") as f:
+                    new_dict = json.load(f)
+                    for key, value in new_dict.items():
+                        class_name = eval(value["__class__"])
+                        self.__objects[key] = class_name(value)
         except FileNotFoundError:
-            pass
+            return
+        except json.JSONDecodeError:
+            return
+    
+    def delete(self, obj=None):
+        """Delete obj from __objects if it’s inside"""
+        if obj is None:
+            return
+        key = obj.__class__.__name__ + "." + obj.id
+        if key in self.__objects:
+            del self.__objects[key]
+        self.save()
