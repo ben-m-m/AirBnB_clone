@@ -1,6 +1,8 @@
 #!/usr/bin/python3
+"""Place class"""
 
 from models.base_model import BaseModel
+
 
 class Place(BaseModel):
     """Place class"""
@@ -15,6 +17,7 @@ class Place(BaseModel):
     latitude = 0.0
     longitude = 0.0
     amenity_ids = []
-    
+
     def __init__(self, **kwargs):
+        """call the super class with the args"""
         super().__init__(**kwargs)

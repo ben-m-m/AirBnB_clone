@@ -18,25 +18,25 @@ class FileStorage:
         __file_path (str): path to the JSON file
         __objects (dict): objects will be stored
     """
-    
+
     __file_path = "file.json"
     __objects = {}
-    
+
     def __init__(self):
         """Init method"""
         pass
-    
+
     def all(self):
         """Returns the dictionary __objects"""
         self.reload()
         return self.__objects
-    
+
     def new(self, obj):
         """Sets in __objects the obj with key <obj class name>.id"""
         key = obj.__class__.__name__ + "." + obj.id
         self.__objects[key] = obj
         self.save()
-        
+
     def save(self):
         """Serializes __objects to the JSON file (path: __file_path)"""
         new_dict = {}
@@ -44,7 +44,7 @@ class FileStorage:
             new_dict[key] = value.to_dict()
         with open(self.__file_path, "w") as f:
             json.dump(new_dict, f)
-    
+
     def reload(self):
         """Deserializes the JSON file to __objects"""
         try:
@@ -56,7 +56,7 @@ class FileStorage:
             return
         except json.JSONDecodeError:
             return
-    
+
     def delete(self, obj=None):
         """Delete obj from __objects if it’s inside"""
         if obj is None:
@@ -65,5 +65,3 @@ class FileStorage:
         if key in self.__objects:
             del self.__objects[key]
         self.save()
-    
-    
