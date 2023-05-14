@@ -61,7 +61,14 @@ class FileStorage:
         """Delete obj from __objects if it’s inside"""
         if obj is None:
             return
-        key = obj.__class__.__name__ + "." + obj.id
-        if key in self.__objects:
-            del self.__objects[key]
+        if obj in self.__objects:
+            del self.__objects[obj]
+        self.save()
+    
+    def update(self, obj, k, v):
+        """Update obj in __objects with k : v as attributes"""
+        # if obj is None:
+        #     return
+        if obj in self.__objects:
+            setattr(self.__objects[obj], k, eval(v))
         self.save()

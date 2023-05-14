@@ -16,19 +16,18 @@ from models import storage
 
 class HBNBCommand(cmd.Cmd):
     """HBNBCommand class"""
+
     prompt = '(hbnb) '
-    __classes = ["BaseModel", "User", "State",
-                 "City", "Amenity", "Place", "Review"]
-    __dict = {}
-    __classes_id = []
-
-    def state(self, args):
-        """state method"""
-        args = args.split()
-        self.__dict = storage.all()
-        self.__classes_id = list(self.__dict.keys())
-        return args
-
+    
+    __classes = {"BaseModel" : BaseModel,
+                "User" : User,
+                "State" : State,
+                "City" : City,
+                "Amenity" : Amenity,
+                "Place" : Place,
+                "Review" : Review}
+    __cli_kwargs = {}
+    
     def do_quit(self, arg):
         """Quit command to exit the program\n"""
         return True
@@ -45,75 +44,83 @@ class HBNBCommand(cmd.Cmd):
         """create method"""
         if arg == "":
             print("** class name missing **")
-        elif arg not in self.__classes:
+        elif arg not in self.__classes.keys():
             print("** class doesn't exist **")
         else:
-            new_obj = eval(arg)()
-            print(new_obj.id)
-            storage.save()
-
+            for k, v in self.__classes.items():
+                if arg == k:
+                    print(v(self.__cli_kwargs).id)
+    
     def do_show(self, arg):
         """show method"""
-        args = self.state(arg)
-        # print(self.__dict)
+        args, store_key = self.__split_key(arg)
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in self.__classes:
+        elif args[0] not in self.__classes.keys():
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
-        elif args[0] + "." + args[1] not in self.__classes_id:
+        elif store_key not in storage.all().keys():
             print("** no instance found **")
         else:
-            # print(type(args[0] + "." + args[1]))
-            print(self.__dict[args[0] + "." + args[1]])
-
+            for k, v in storage.all().items():
+                if store_key == k:
+                    print(v)
+    
     def do_destroy(self, arg):
         """destroy method"""
-        args = self.state(arg)
+        args, store_key = self.__split_key(arg)
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in self.__classes:
+        elif args[0] not in self.__classes.keys():
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
-        elif args[0] + "." + args[1] not in self.__classes_id:
+        elif store_key not in storage.all().keys():
             print("** no instance found **")
         else:
-            # print(type(args[0] + "." + args[1]))
-            storage.delete(self.__dict[args[0] + "." + args[1]])
-            self.__dict = storage.all()
-            self.__classes_id = list(self.__dict.keys())
-
+            try:
+                for k, v in storage.all().items():
+                    if store_key == k:
+                        storage.delete(k)
+            except RuntimeError:
+                pass
+    
     def do_all(self, arg):
-        """update method"""
-        args = self.state(arg)
-        listi = []
+        """print every object in database"""
+        args = arg.split()
         if len(args) == 1 or len(args) == 0:
-            for value in self.__dict.values():
-                listi.append(str(value))
-            print(listi)
-
+            [print(val) for key, val in storage.all().items()]
+    
     def do_update(self, arg):
         """update method"""
-        args = self.state(arg)
+        args, store_key = self.__split_key(arg)
+        
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in self.__classes:
+        elif args[0] not in self.__classes.keys():
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
-        elif args[0] + "." + args[1] not in self.__classes_id:
+        elif store_key not in storage.all().keys():
             print("** no instance found **")
         elif len(args) == 2:
             print("** no attribute found **")
         elif len(args) == 3:
             print("** no attribute value found **")
         else:
-            key = args[0] + "." + args[1]
-            setattr(self.__dict[key], args[2], args[3])
-            storage.save()
-
+            attr = args[2]
+            attr_val = args[3]
+            try:
+                for k, v in storage.all().items():
+                    if store_key == k:
+                        storage.update(k, attr, attr_val)
+            except RuntimeError:
+                pass
+    
+    def __split_key(self, arg):
+        args = arg.split()
+        return args, args[0] + "." + args[1]
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
