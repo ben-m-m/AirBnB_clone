@@ -128,5 +128,6 @@ class HBNBCommand(cmd.Cmd):
         return [a for a in self.__classes.keys() if a.startswith(text)] +\
             [a for a in b if a.startswith(text)]
 
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
