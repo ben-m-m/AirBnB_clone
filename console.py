@@ -90,8 +90,13 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, arg):
         """print every object in database"""
         args = arg.split()
-        if len(args) == 1 or len(args) == 0:
+        if len(args) == 0:
             [print(val) for key, val in storage.all().items()]
+        elif len(args) == 1:
+            if args[0] not in self.__classes.keys():
+                print("** class doesn't exist **")
+            elif args[0] in self.__classes.keys():
+                [print(val) for key, val in storage.all().items() if arg[0] in key]
 
     def do_update(self, arg):
         """update method"""
