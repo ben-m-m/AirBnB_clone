@@ -54,7 +54,7 @@ class HBNBCommand(cmd.Cmd):
                     print(v(self.__cli_kwargs).id)
 
     def do_show(self, arg):
-        """show method"""
+        """Prints the string of an instance based on the class name and id you input"""
         args, store_key = self.__split_key(arg)
         if len(args) == 0:
             print("** class name missing **")
@@ -70,7 +70,7 @@ class HBNBCommand(cmd.Cmd):
                     print(v)
 
     def do_destroy(self, arg):
-        """destroy method"""
+        """deletes an instance based on the class name and id input"""
         args, store_key = self.__split_key(arg)
         if len(args) == 0:
             print("** class name missing **")
@@ -89,7 +89,7 @@ class HBNBCommand(cmd.Cmd):
                 pass
 
     def do_all(self, arg):
-        """print every object in database"""
+        """prints all instances or instances of the class name that you input"""
         args = arg.split()
         if len(args) == 0:
             [print(val) for key, val in storage.all().items()]
@@ -100,7 +100,8 @@ class HBNBCommand(cmd.Cmd):
                 [print(val) for key, val in storage.all().items() if arg[0] in key]
 
     def do_update(self, arg):
-        """update method"""
+        """updates an instance based on the class name and id by adding or updating 
+        an attribute and its value"""
         args, store_key = self.__split_key(arg)
 
         if len(args) == 0:
