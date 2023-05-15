@@ -43,7 +43,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
-        """create method"""
+        """creates a new instance of entered class name as argument and prints the id"""
         if arg == "":
             print("** class name missing **")
         elif arg not in self.__classes.keys():
