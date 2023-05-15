@@ -67,8 +67,11 @@ class FileStorage:
     
     def update(self, obj, k, v):
         """Update obj in __objects with k : v as attributes"""
-        # if obj is None:
-        #     return
         if obj in self.__objects:
             setattr(self.__objects[obj], k, eval(v))
         self.save()
+
+    def getid(self, obj):
+        """Return the id of obj"""
+        if obj in self.__objects:
+            return self.__objects[obj].id
