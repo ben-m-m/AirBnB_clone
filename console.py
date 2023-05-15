@@ -121,6 +121,8 @@ class HBNBCommand(cmd.Cmd):
 
     def __split_key(self, arg):
         args = arg.split()
+        if len(args) == 1:
+            return args, None
         return args, args[0] + "." + args[1]
 
     def completedefault(self, text, *ignored: Any) -> list[str]:
