@@ -19,6 +19,7 @@ class HBNBCommand(cmd.Cmd):
     """HBNBCommand class"""
 
     prompt = '(hbnb) '
+    intro = 'this is a command line interpreter for AirBnB project'
 
     __classes = {"BaseModel": BaseModel,
                  "User": User,
@@ -135,6 +136,9 @@ class HBNBCommand(cmd.Cmd):
         return [a for a in self.__classes.keys() if a.startswith(text)] +\
             [a for a in b if a.startswith(text)]
 
+    def default(self, line):
+        arg = line.split(".")
+        self.do_all(arg[0])
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
