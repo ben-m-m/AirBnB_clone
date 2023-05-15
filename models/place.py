@@ -18,6 +18,6 @@ class Place(BaseModel):
     longitude = 0.0
     amenity_ids = []
 
-    def __init__(self, **kwargs):
+    def __init__(self, *args, **kwargs):
         """call the super class with the args"""
         super().__init__(**kwargs)

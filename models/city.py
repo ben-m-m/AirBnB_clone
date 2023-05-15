@@ -9,6 +9,6 @@ class City(BaseModel):
     name = ""
     state_id = ""
 
-    def __init__(self, **kwargs):
+    def __init__(self, *args, **kwargs):
         """call the super class with the args"""
         super().__init__(**kwargs)

@@ -8,6 +8,6 @@ class Amenity(BaseModel):
     """Amenity class"""
     name = ""
 
-    def __init__(self, **kwargs):
+    def __init__(self, *args, **kwargs):
         """call the super class with the args"""
         super().__init__(**kwargs)
