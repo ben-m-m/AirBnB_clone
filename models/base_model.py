@@ -24,7 +24,7 @@ class BaseModel:
             if kwargs is not empty, the instance is created from a
             dictionary of keys/values
             otherwise, the instance is created with a unique id and
-            the current datetime - timestamped, and added to storage        
+            the current datetime - timestamped, and added to storage
         """
         if kwargs:
             for key, value in kwargs.items():
@@ -41,7 +41,8 @@ class BaseModel:
 
     def __str__(self):
         """returns a string representation of the instance"""
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}"\
+            .format(self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
         """updates the public instance attribute updated_at"""
