@@ -64,7 +64,7 @@ class FileStorage:
         if obj in self.__objects:
             del self.__objects[obj]
         self.save()
-    
+
     def update(self, obj, k, v):
         """Update obj in __objects with k : v as attributes"""
         if obj in self.__objects:

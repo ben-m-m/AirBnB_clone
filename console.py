@@ -13,6 +13,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from models import storage
+from typing import Any
 
 
 class HBNBCommand(cmd.Cmd):
@@ -97,7 +98,8 @@ class HBNBCommand(cmd.Cmd):
             if args[0] not in self.__classes.keys():
                 print("** class doesn't exist **")
             elif args[0] in self.__classes.keys():
-                [print(val) for key, val in storage.all().items() if arg[0] in key]
+                [print(val)
+                 for key, val in storage.all().items() if arg[0] in key]
 
     def do_update(self, arg):
         """updates an instance based on the class name and id by adding or updating 
@@ -127,19 +129,23 @@ class HBNBCommand(cmd.Cmd):
                 pass
 
     def __split_key(self, arg):
+        """splits the key"""
         args = arg.split()
         if len(args) == 1:
             return args, None
         return args, args[0] + "." + args[1]
 
-    def completedefault(self, text, *ignored: Any) -> list[str]:
+    def completedefault(self, text, *ignored):
+        """completes the default method"""
         b = [storage.getid(k) for k, v in storage.all().items()]
         return [a for a in self.__classes.keys() if a.startswith(text)] +\
-            [a for a in b if a.startswith(text)]
+            [a for a in b if a is not None and a.startswith(text)]
 
     def default(self, line):
+        """default method"""
         arg = line.split(".")
         self.do_all(arg[0])
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
