@@ -44,7 +44,8 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
-        """creates a new instance of entered class name as argument and prints the id"""
+        """creates a new instance of entered
+        class name as argument and prints the id"""
         if arg == "":
             print("** class name missing **")
         elif arg not in self.__classes.keys():
@@ -55,7 +56,8 @@ class HBNBCommand(cmd.Cmd):
                     print(v(self.__cli_kwargs).id)
 
     def do_show(self, arg):
-        """Prints the string of an instance based on the class name and id you input"""
+        """Prints the string of an instance
+        based on the class name and id you input"""
         args, store_key = self.__split_key(arg)
         if len(args) == 0:
             print("** class name missing **")
@@ -90,7 +92,8 @@ class HBNBCommand(cmd.Cmd):
                 pass
 
     def do_all(self, arg):
-        """prints all instances or instances of the class name that you input"""
+        """prints all instances or instances of
+        the class name that you input"""
         args = arg.split()
         if len(args) == 0:
             [print(val) for key, val in storage.all().items()]
@@ -102,7 +105,8 @@ class HBNBCommand(cmd.Cmd):
                  for key, val in storage.all().items() if arg[0] in key]
 
     def do_update(self, arg):
-        """updates an instance based on the class name and id by adding or updating 
+        """updates an instance based on the class name and id
+        by adding or updating
         an attribute and its value"""
         args, store_key = self.__split_key(arg)
 
